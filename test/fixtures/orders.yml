@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address: MyString
+  phone: MyString
+  name: MyString
+  takeaway: false
+  takeaway_time: 2020-11-18 12:25:27
+  user: one
+  price: 1
+  coupon: MyString
+
+two:
+  address: MyString
+  phone: MyString
+  name: MyString
+  takeaway: false
+  takeaway_time: 2020-11-18 12:25:27
+  user: two
+  price: 1
+  coupon: MyString
