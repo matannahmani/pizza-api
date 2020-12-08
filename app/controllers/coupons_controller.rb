@@ -4,8 +4,8 @@ class CouponsController < ApplicationController
   # GET /coupons
   def index
     @coupons = Coupon.all
-
-    render json: @coupons
+    @coupons = @coupons.sort_by { |i| i[:id] }
+    render json: CouponSerializer.new(@coupons)
   end
 
   # GET /coupons/1
@@ -46,6 +46,6 @@ class CouponsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def coupon_params
-      params.require(:coupon).permit(:discount, :code, :enddate, :startdate)
+      params.require(:coupon).permit(:discount, :code, :status)
     end
 end

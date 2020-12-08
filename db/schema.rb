@@ -18,8 +18,7 @@ ActiveRecord::Schema.define(version: 2020_11_18_102600) do
   create_table "coupons", force: :cascade do |t|
     t.integer "discount"
     t.string "code"
-    t.date "enddate"
-    t.date "startdate"
+    t.boolean "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -39,13 +38,10 @@ ActiveRecord::Schema.define(version: 2020_11_18_102600) do
     t.string "phone"
     t.string "name"
     t.boolean "takeaway"
-    t.datetime "takeaway_time"
-    t.bigint "user_id", null: false
     t.integer "price"
     t.string "coupon"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -74,5 +70,4 @@ ActiveRecord::Schema.define(version: 2020_11_18_102600) do
 
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
-  add_foreign_key "orders", "users"
 end

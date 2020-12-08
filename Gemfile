@@ -47,3 +47,5 @@ gem "rack-cors", "~> 1.1"
 gem "geocoder", "~> 1.6"
 
 gem "jsonapi-serializer", "~> 2.1"
+
+gem "pry-byebug", "~> 3.9"

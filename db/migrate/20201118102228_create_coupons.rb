@@ -3,9 +3,7 @@ class CreateCoupons < ActiveRecord::Migration[6.0]
     create_table :coupons do |t|
       t.integer :discount
       t.string :code
-      t.date :enddate
-      t.date :startdate
-
+      t.boolean :status
       t.timestamps
     end
   end
