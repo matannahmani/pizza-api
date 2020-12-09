@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
     new_params = product_params.except(:data)
     if @product.update(new_params)
       @product.photo.destroy.purge if @product.photo.attached? && !product_params[:data].nil?
-      if !product_params[:data].nil?
+      if !product_params[:data].nil? && !product_params[:data].length > 50
         photo = Cloudinary::Uploader.upload(product_params[:data], :public_id => @product.name)
         file = URI.open(photo["url"])
         @product.photo.attach(io: file, filename: new_params[:name], content_type: 'image/png')
