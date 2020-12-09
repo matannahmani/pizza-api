@@ -49,3 +49,7 @@ gem "geocoder", "~> 1.6"
 gem "jsonapi-serializer", "~> 2.1"
 
 gem "pry-byebug", "~> 3.9"
+
+gem "cloudinary", "~> 1.18"
+
+gem "dotenv-rails", "~> 2.7"

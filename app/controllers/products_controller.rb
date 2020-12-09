@@ -1,11 +1,12 @@
 class ProductsController < ApplicationController
+  require 'open-uri'
   before_action :set_product, only: [:show, :update, :destroy]
 
   # GET /products
   def index
     @products = Product.all
-
-    render json: @products
+    @products = @products.sort_by { |i| i[:id] }
+    render json: ProductSerializer.new(@products)
   end
 
   # GET /products/1
@@ -15,9 +16,12 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
-
+    new_params = product_params.except(:data)
+    @product = Product.new(new_params)
     if @product.save
+      photo = Cloudinary::Uploader.upload(product_params[:data], :public_id => @product.name)
+      file = URI.open(photo["url"])
+      @product.photo.attach(io: file, filename: new_params[:name], content_type: 'image/png')
       render json: @product, status: :created, location: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -26,8 +30,15 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    if @product.update(product_params)
-      render json: @product
+    new_params = product_params.except(:data)
+    if @product.update(new_params)
+      @product.photo.destroy.purge if @product.photo.attached? && !product_params[:data].nil?
+      if !product_params[:data].nil?
+        photo = Cloudinary::Uploader.upload(product_params[:data], :public_id => @product.name)
+        file = URI.open(photo["url"])
+        @product.photo.attach(io: file, filename: new_params[:name], content_type: 'image/png')
+      end
+      render json: @product, status: :created, location: @product
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -46,6 +57,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :price, :description)
+      params.require(:product).permit(:name, :price, :description, :data, :status)
     end
 end
