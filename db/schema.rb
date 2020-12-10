@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2020_12_09_092144) do
     t.integer "price"
     t.string "description"
     t.boolean "status"
+    t.string "size", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

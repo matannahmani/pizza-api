@@ -5,6 +5,7 @@ class CreateProducts < ActiveRecord::Migration[6.0]
       t.integer :price
       t.string :description
       t.boolean :status
+      t.string :size, array: true
       t.timestamps
     end
   end
