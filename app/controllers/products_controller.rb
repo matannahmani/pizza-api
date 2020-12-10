@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    new_params = product_params.except(:data)
+    new_params = product_params.except(:photodata)
     @product = Product.new(new_params)
     if @product.save
       image_upload
@@ -28,10 +28,10 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    new_params = product_params.except(:data)
+    new_params = product_params.except(:photodata)
     if @product.update(new_params)
-      @product.photo.destroy.purge if @product.photo.attached? && !product_params[:data].nil?
-      image_upload if !product_params[:data].nil?
+      @product.photo.destroy.purge if @product.photo.attached? && !product_params[:photodata].nil?
+      image_upload if !product_params[:photodata].nil?
       render json: @product, status: :created, location: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -51,11 +51,11 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :price, :description, :data, :status, :size => [])
+      params.require(:product).permit(:name, :price, :description, :photodata, :status, :size => [])
     end
 
     def image_upload
-      decoded_data = Base64.decode64(product_params[:data].split(',')[1])
+      decoded_data = Base64.decode64(product_params[:photodata].split(',')[1])
       @product.photo.attach(
         io: StringIO.new(decoded_data),
         content_type: 'image/jpeg',
