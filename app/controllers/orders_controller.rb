@@ -15,9 +15,21 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
-
+    # binding.pry
+    new_params = order_params.except(:order_products, :coupon)
+    coupon = Coupon.find_by(code: order_params[:coupon])
+    @order = Order.new(new_params)
+    @order.coupon = coupon
     if @order.save
+      order_params[:order_products].each do |item|
+        begin
+          OrderProduct.create(product: Product.find(item[:id]), size: item[:size], order: @order, amount: item[:amount])
+        rescue
+          @order.destroy
+          return render json: { data: 'error', status: 500 }
+        end
+      end
+      @order.setprice
       render json: @order, status: :created, location: @order
     else
       render json: @order.errors, status: :unprocessable_entity
@@ -46,6 +58,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:address, :phone, :name, :takeaway, :takeaway_time, :user_id, :price, :coupon)
+      params.require(:order).permit(:address, :phone, :name, :takeaway, :user_id, :price, :coupon, :order_products => [:id,:amount,:size])
     end
 end

@@ -6,7 +6,6 @@ class CreateOrders < ActiveRecord::Migration[6.0]
       t.string :name
       t.boolean :takeaway
       t.integer :price
-      t.string :coupon
 
       t.timestamps
     end

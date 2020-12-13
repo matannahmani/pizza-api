@@ -16,7 +16,6 @@ class CouponsController < ApplicationController
   # POST /coupons
   def create
     @coupon = Coupon.new(coupon_params)
-
     if @coupon.save
       render json: @coupon, status: :created, location: @coupon
     else
@@ -36,6 +35,15 @@ class CouponsController < ApplicationController
   # DELETE /coupons/1
   def destroy
     @coupon.destroy
+  end
+
+  def checkdiscount
+    @coupon = Coupon.find_by(code: coupon_params[:code])
+    if !@coupon.nil?
+      render json: CouponSerializer.new(@coupon), status: 200
+    else
+      render json: { coupon: nil }, status: 500
+    end
   end
 
   private

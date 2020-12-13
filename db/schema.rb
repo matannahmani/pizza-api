@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_09_092144) do
+ActiveRecord::Schema.define(version: 2020_12_13_160133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 2020_12_09_092144) do
   create_table "coupons", force: :cascade do |t|
     t.integer "discount"
     t.string "code"
-    t.boolean "status"
+    t.boolean "status", default: false
+    t.bigint "order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_coupons_on_order_id"
   end
 
   create_table "order_products", force: :cascade do |t|
@@ -50,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_12_09_092144) do
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "size"
     t.index ["order_id"], name: "index_order_products_on_order_id"
     t.index ["product_id"], name: "index_order_products_on_product_id"
   end
@@ -60,7 +63,6 @@ ActiveRecord::Schema.define(version: 2020_12_09_092144) do
     t.string "name"
     t.boolean "takeaway"
     t.integer "price"
-    t.string "coupon"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 2020_12_09_092144) do
     t.string "size", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "jprice"
   end
 
   create_table "users", force: :cascade do |t|

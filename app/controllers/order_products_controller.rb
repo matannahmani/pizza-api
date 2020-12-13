@@ -16,7 +16,6 @@ class OrderProductsController < ApplicationController
   # POST /order_products
   def create
     @order_product = OrderProduct.new(order_product_params)
-
     if @order_product.save
       render json: @order_product, status: :created, location: @order_product
     else
