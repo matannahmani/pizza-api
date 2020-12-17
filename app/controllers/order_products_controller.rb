@@ -1,6 +1,6 @@
 class OrderProductsController < ApplicationController
   before_action :set_order_product, only: [:show, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /order_products
   def index
     @order_products = OrderProduct.all

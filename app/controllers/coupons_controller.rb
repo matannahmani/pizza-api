@@ -1,6 +1,6 @@
 class CouponsController < ApplicationController
   before_action :set_coupon, only: [:show, :update, :destroy]
-
+  before_action :authenticate_user!, except: :checkdiscount
   # GET /coupons
   def index
     @coupons = Coupon.all

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :update, :destroy]
-
+  before_action :authenticate_user!, except: :create
   # GET /orders
   def index
     @orders = Order.all

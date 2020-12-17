@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   require 'open-uri'
   before_action :set_product, only: [:show, :update, :destroy]
-
+  before_action :authenticate_user!, except: [:checkcart,:index]
   # GET /products
   def index
     @products = Product.all
