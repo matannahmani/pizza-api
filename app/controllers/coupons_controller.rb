@@ -39,7 +39,7 @@ class CouponsController < ApplicationController
 
   def checkdiscount
     @coupon = Coupon.find_by(code: coupon_params[:code])
-    if !@coupon.nil?
+    if !@coupon.nil? && @coupon.status
       render json: CouponSerializer.new(@coupon), status: 200
     else
       render json: { coupon: nil }, status: 500
