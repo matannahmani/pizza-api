@@ -26,6 +26,25 @@ class ProductsController < ApplicationController
     end
   end
 
+  def checkcart
+    if params[:products].nil?
+      render json: { data: nil }
+    else
+      result = []
+      params[:products].each do |p|
+        pd = Product.find_by(name: p.split('=>')[0]) #checks if product exists
+        next if pd.nil?
+
+        if pd.size.include?(p.split('=>')[1]) && pd.status
+          pd = pd.attributes.merge(photourl: pd.photo_url,choosensize: p.split('=>')[1],amount: p.split('=>')[2])
+          result << pd.except('updated_at', 'created_at')
+        end
+      end
+      result.sort_by! { |i| i[:id] }
+      render json: result, status: :ok
+    end
+  end
+
   # PATCH/PUT /products/1
   def update
     new_params = product_params.except(:photodata)
@@ -51,7 +70,8 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :price, :jprice, :description, :photodata, :status, :size => [])
+      params.require(:product).permit(:name, :price, :jprice, :description, :photodata, :status, size: [])
+      params.permit(products: [])
     end
 
     def image_upload
