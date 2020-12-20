@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   geocoded_by :address
   after_validation :geocode
+
+  def remember_me
+    true
+  end
 end

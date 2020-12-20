@@ -1,5 +1,11 @@
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
+
+  # def create
+  #   params[:user].merge!(remember_me: 2.days)
+  #   super
+  # end
+
   private
 
   def respond_with(resource, _opts = {})
