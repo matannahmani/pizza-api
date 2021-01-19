@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   # geocoded_by :address
   # after_validation :geocode
+  after_create :setprice
   has_one :coupon
   has_many :order_products
   has_many :products, :through => :order_products
@@ -8,6 +9,10 @@ class Order < ApplicationRecord
   def setprice
     self.price = calcprice
     save
+  end
+
+  def productlist
+    order_products.map { |p| [p.product.name,p.amount,p.size]}
   end
 
   def calcprice

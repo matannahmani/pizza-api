@@ -3,9 +3,9 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, except: :create
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = Order.where(done: false)
 
-    render json: @orders
+    render json: OrderSerializer.new(@orders)
   end
 
   # GET /orders/1
@@ -29,8 +29,7 @@ class OrdersController < ApplicationController
           return render json: { data: 'error', status: 500 }
         end
       end
-      @order.setprice
-      render json: @order, status: :created, location: @order
+      render json: OrderSerializer.new(@order), status: :created, location: @order
     else
       render json: @order.errors, status: :unprocessable_entity
     end
@@ -45,11 +44,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # DELETE /orders/1
-  def destroy
-    @order.destroy
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -58,6 +52,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:address, :phone, :name, :takeaway, :user_id, :price, :coupon, :order_products => [:id,:amount,:size])
+      params.require(:order).permit(:address, :phone, :name, :takeaway, :user_id, :price, :coupon,:done,:status, :order_products => [:id,:amount,:size])
     end
 end

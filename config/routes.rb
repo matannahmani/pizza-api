@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-  resources :shops
-  resources :order_products
-  resources :orders
+  resources :shops, only: [:show,:update]
+  resources :orders, except: :destroy
   resources :products
   resources :coupons
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
+    sign_out: 'logout'
+    # registration: 'signup'
   },
   controllers: {
     sessions: 'users/sessions',
