@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
         end
       end
       @order.setprice
-      if @order.payment
+      if @order.paid
         render json: OrderSerializer.new(@order), status: :created, location: @order
       else
         render json: 'Error with payment server! please try again later', status: :unprocessable_entity
@@ -46,6 +46,10 @@ class OrdersController < ApplicationController
     else
       render json: @order.errors, status: :unprocessable_entity
     end
+  end
+
+  def orderstatus
+
   end
 
   private

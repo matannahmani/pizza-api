@@ -1,0 +1,53 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transactionId: 1
+  transactionToken: MyString
+  transactionTypeId: 1
+  paymentType: 1
+  sum: 1.5
+  firstPaymentSum: 
+  periodicalPaymentSum: 1.5
+  paymentsNum: 1
+  allPaymentsNum: 1
+  paymentDate: MyString
+  asmachta: MyString
+  description: MyString
+  fullName: MyString
+  payerPhone: MyString
+  payerEmail: MyString
+  cardSuffix: MyString
+  cardType: MyString
+  cardTypeCode: 1
+  cardBrand: MyString
+  cardBrandCode: 1
+  cardExp: MyString
+  processId: 1
+  processToken: MyString
+  customFields: 
+
+two:
+  transactionId: 1
+  transactionToken: MyString
+  transactionTypeId: 1
+  paymentType: 1
+  sum: 1.5
+  firstPaymentSum: 
+  periodicalPaymentSum: 1.5
+  paymentsNum: 1
+  allPaymentsNum: 1
+  paymentDate: MyString
+  asmachta: MyString
+  description: MyString
+  fullName: MyString
+  payerPhone: MyString
+  payerEmail: MyString
+  cardSuffix: MyString
+  cardType: MyString
+  cardTypeCode: 1
+  cardBrand: MyString
+  cardBrandCode: 1
+  cardExp: MyString
+  processId: 1
+  processToken: MyString
+  customFields: 

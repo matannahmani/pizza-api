@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   }
   get 'couponcheck', to: 'coupons#checkdiscount'
   get 'checkcart', to: 'products#checkcart'
+  get 'orderstatus', to: 'orders#orderstatus'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
