@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_120619) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "status", default: false
     t.boolean "shipped", default: false
-    t.boolean "done"
+    t.boolean "done", default: false
     t.string "url"
   end
 

@@ -1,8 +1,7 @@
 class Order < ApplicationRecord
 require 'rest-client'
-  # geocoded_by :address
-  # after_validation :geocode
-  has_one :payment
+
+  has_one :payment, dependent: :destroy
   has_one :coupon
   has_many :order_products
   has_many :products, :through => :order_products, dependent: :destroy
@@ -32,7 +31,7 @@ require 'rest-client'
     response = RestClient.post ENV['API_PAYMENT'],
     { userId: ENV['PAYMENT_USER'], pageCode: ENV['PAYMENT_CODE'],
       sum: price, description: productlist, paymentNum: 1, maxPaymentNum: 1, fullName: name, phone: phone,
-      successUrl: "#{ENV['API_URL']}/cart?success=#{id}", cancelUrl: "#{ENV['API_URL']}/cart?id=#{id}?takeaway=#{takeaway}" }
+      successUrl: "#{ENV['API_URL']}/paid?id#{id}", cancelUrl: "#{ENV['API_URL']}/cart?id=#{id}?takeaway=#{takeaway}" }
     result = JSON.parse(response)
     return { data: 'error', status: 500 } unless result['status'] == 1
     Payment.create(order: self, processId: result['data']['processId'],

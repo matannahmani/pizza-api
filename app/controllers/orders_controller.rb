@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
-  before_action :authenticate_user!, except: :create
+  before_action :set_order, only: [:show, :update, :destroy, :orderstatus]
+  before_action :authenticate_user!, except: [:create, :orderstatus]
   # GET /orders
   def index
     @orders = Order.where(done: false)
@@ -49,7 +49,8 @@ class OrdersController < ApplicationController
   end
 
   def orderstatus
-
+    return render json: { code: 500, status: :unprocessable_entity } if @order.nil?
+    render json: { code: 200, status: 200, data: OrderSerializer.new(@order) }
   end
 
   private
@@ -60,6 +61,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:address, :phone, :name, :takeaway, :user_id, :price, :coupon,:done,:status, :order_products => [:id,:amount,:size])
+      params.require(:order).permit(:address, :phone, :name, :takeaway, :user_id, :price, :coupon,:done,:status,:shipped, :order_products => [:id,:amount,:size])
     end
 end
