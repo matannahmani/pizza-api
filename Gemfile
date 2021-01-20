@@ -55,3 +55,5 @@ gem "cloudinary", "~> 1.18"
 gem "dotenv-rails", "~> 2.7"
 
 gem "rails_same_site_cookie", "~> 0.1.8"
+
+gem "rest-client", "~> 2.1"

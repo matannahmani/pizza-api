@@ -15,7 +15,6 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    # binding.pry
     new_params = order_params.except(:order_products, :coupon)
     coupon = Coupon.find_by(code: order_params[:coupon])
     @order = Order.new(new_params)
@@ -29,7 +28,12 @@ class OrdersController < ApplicationController
           return render json: { data: 'error', status: 500 }
         end
       end
-      render json: OrderSerializer.new(@order), status: :created, location: @order
+      @order.setprice
+      if @order.payment
+        render json: OrderSerializer.new(@order), status: :created, location: @order
+      else
+        render json: 'Error with payment server! please try again later', status: :unprocessable_entity
+      end
     else
       render json: @order.errors, status: :unprocessable_entity
     end
