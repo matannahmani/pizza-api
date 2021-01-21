@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   post 'switchtakeaway', to: 'shops#switchtakeaway'
   post 'switchdelivery', to: 'shops#switchdelivery'
   get 'shop', to: 'shops#show'
+  get 'dailyorders', to: 'orders#dailyorders'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

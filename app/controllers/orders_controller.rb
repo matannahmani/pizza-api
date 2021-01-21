@@ -53,6 +53,10 @@ class OrdersController < ApplicationController
     render json: { code: 200, status: 200, data: OrderSerializer.new(@order) }
   end
 
+  def dailyorders
+    render json: OrderSerializer.new(Order.where(status: true))
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
