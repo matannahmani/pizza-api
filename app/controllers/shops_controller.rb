@@ -1,5 +1,5 @@
 class ShopsController < ApplicationController
-  before_action :authenticate_user!, except: :shop
+  before_action :authenticate_user!, except: :show
 
   # GET /shops/1
   def show
@@ -22,8 +22,4 @@ class ShopsController < ApplicationController
     render json: Shop.first
   end
 
-  # DELETE /shops/1
-  def destroy
-    @shop.destroy
-  end
 end

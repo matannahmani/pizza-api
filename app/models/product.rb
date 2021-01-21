@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   has_one_attached :photo
-  before_validation :pizzasize
+  # before_validation :pizzasize # legacy
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :price, presence: true
@@ -14,11 +14,11 @@ class Product < ApplicationRecord
 
   private
 
-  def pizzasize
-    if size.blank?
-      errors.add(:size, "size is blank/invalid")
-    elsif size.detect { |s| !(%w(M L XL XXL 55CM).include? s) }
-      errors.add(:size, "size is invalid")
-    end
-  end
+  # def pizzasize # now its up to buissness to choose sizes name
+  #   if size.blank?
+  #     errors.add(:size, "size is blank/invalid")
+  #   elsif size.detect { |s| !(%w(M L XL XXL 55CM).include? s) }
+  #     errors.add(:size, "size is invalid")
+  #   end
+  # end
 end
