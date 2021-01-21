@@ -34,7 +34,8 @@ require 'rest-client'
       successUrl: "#{ENV['API_URL']}/paid?id=#{id}", cancelUrl: "#{ENV['API_URL']}/cart?id=#{id}?takeaway=#{takeaway}" }
     result = JSON.parse(response)
     puts result['body']
-    puts "#{ENV['PAYMENT_USER']} #{ENV['PAYMENT_CODE']} #{ENV['API_URL']}/paid?id=#{id} "
+    puts "#{ENV['PAYMENT_USER']} #{ENV['PAYMENT_CODE']} #{ENV['API_PAYMENT']} "
+    binding.pry
     return { data: 'error', status: 500 } unless result['status'] == 1
     Payment.create(order: self, processId: result['data']['processId'],
                    processToken: result['data']['processToken'])
