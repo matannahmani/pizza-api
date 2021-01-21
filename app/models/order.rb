@@ -31,7 +31,7 @@ require 'rest-client'
     response = RestClient.post ENV['API_PAYMENT'],
     { userId: ENV['PAYMENT_USER'], pageCode: ENV['PAYMENT_CODE'],
       sum: price, description: productlist, paymentNum: 1, maxPaymentNum: 1, fullName: name, phone: phone,
-      successUrl: "https://#{ENV['API_URL']}/paid?id#{id}", cancelUrl: "https://#{ENV['API_URL']}/cart?id=#{id}?takeaway=#{takeaway}" }
+      successUrl: "#{ENV['API_URL']}/paid?id#{id}", cancelUrl: "#{ENV['API_URL']}/cart?id=#{id}?takeaway=#{takeaway}" }
     result = JSON.parse(response)
     return { data: 'error', status: 500 } unless result['status'] == 1
     Payment.create(order: self, processId: result['data']['processId'],

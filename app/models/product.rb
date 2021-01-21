@@ -12,7 +12,7 @@ class Product < ApplicationRecord
     photo.attached? ? photo.service_url : nil
   end
 
-  private
+  # private
 
   # def pizzasize # now its up to buissness to choose sizes name
   #   if size.blank?
